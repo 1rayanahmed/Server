@@ -1,0 +1,17 @@
+{
+  "name": "coursework-v2-main",
+  "version": "1.0.0",
+  "main": "cw2products.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bson": "^6.10.0",
+    "express": "^4.21.1",
+    "mongodb": "^4.17.2"
+  }
+}
