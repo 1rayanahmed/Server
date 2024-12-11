@@ -80,16 +80,30 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
 
 // Update a single document by ID
 app.put('/collection/:collectionName/:id', (req, res, next) => {
-    req.collection.update(
-        { _id: new ObjectID(req.params.id) },
+    const { collectionName, id } = req.params;
+
+    // Validate ID format
+    if (!ObjectID.isValid(id)) {
+        return res.status(400).send({ error: 'Invalid ID format' });
+    }
+
+    // Update the document
+    req.collection.updateOne(
+        { _id: new ObjectID(id) },
         { $set: req.body },
-        { safe: true, multi: false },
         (err, result) => {
-            if (err) return next(err);
-            res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' });
+            if (err) {
+                console.error("Update error:", err);
+                return next(err);
+            }
+            if (result.matchedCount === 0) {
+                return res.status(404).send({ error: 'Document not found' });
+            }
+            res.send({ msg: 'success' });
         }
     );
 });
+
 
 // Delete a single document by ID
 app.delete('/collection/:collectionName/:id', (req, res, next) => {
