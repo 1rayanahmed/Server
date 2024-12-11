@@ -72,7 +72,7 @@ app.post('/collection/:collectionName', (req, res, next) => {
 
 // Get a single document by ID
 app.get('/collection/:collectionName/:id', (req, res, next) => {
-    req.collection.findOne({ _id: new ObjectId(req.params.id) }, (err, result) => {
+    req.collection.findOne({ _id: new ObjectID(req.params.id) }, (err, result) => {
         if (err) return next(err);
         res.send(result);
     });
@@ -81,7 +81,7 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
 // Update a single document by ID
 app.put('/collection/:collectionName/:id', (req, res, next) => {
     req.collection.update(
-        { _id: new ObjectId(req.params.id) },
+        { _id: new ObjectID(req.params.id) },
         { $set: req.body },
         { safe: true, multi: false },
         (err, result) => {
