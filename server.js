@@ -13,14 +13,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Static File Middleware
-const staticFilesPath = path.join(__dirname, 'public'); // Directory for static files
-app.use('/static', express.static(staticFilesPath));
-
-// Middleware to handle missing files
-app.use('/static', (req, res, next) => {
-    res.status(404).send({ error: 'File not found' });
-});
 
 // CORS Headers Middleware
 app.use((req, res, next) => {
@@ -115,6 +107,17 @@ app.delete('/collection/:collectionName/:id', (req, res, next) => {
         }
     );
 });
+
+// Static File Middleware
+var staticPath = path.resolve(__dirname, 'public'); // Directory for static files
+app.use(express.static(staticPath));
+
+// Middleware to handle missing files
+app.use(function(req, res, next) {
+    response.writeHead(200, { "Content-Type": "text/plain "});
+    response.end("Looks like you didn't find a static file.")
+});
+
 
 // Start the server
 const port = process.env.PORT || 3000;
